@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.emamos.stockscanner.Info">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="127dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:foregroundGravity="center_vertical|center_horizontal|center"
+                    app:srcCompat="@drawable/logo"
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="0dp" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/imageView"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="40dp"
+                    android:foregroundGravity="center_horizontal"
+                    android:gravity="center_vertical|fill_vertical|center_horizontal|fill_horizontal"
+                    android:text="Jak korzystać? "
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/textView23"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Założenia początkowe:"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/textView7"
+                    android:layout_alignStart="@+id/textView7"
+                    android:layout_below="@+id/textView7"
+                    android:layout_marginTop="10dp"
+                    android:text="Aby poprawnie korzytać z aplikacji należy ją wyposażyć w początkowy zestaw plików .csv z danymi dla miniskanera."
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/textView9"
+                    android:layout_alignStart="@+id/textView9"
+                    android:layout_below="@+id/textView9"
+                    android:layout_marginTop="10dp"
+                    android:text="Są to: "
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/textView12"
+                    android:layout_alignStart="@+id/textView12"
+                    android:layout_below="@+id/textView12"
+                    android:text="-listaEwidencji.csv"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/textView10"
+                    android:layout_alignStart="@+id/textView10"
+                    android:layout_below="@+id/textView10"
+                    android:text="-listaElementow.csv"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textView11"
+                    android:layout_alignBottom="@+id/textView11"
+                    android:layout_toEndOf="@+id/textView11"
+                    android:layout_toRightOf="@+id/textView11"
+                    android:text="-listaPomieszczen.csv"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/textView11"
+                    android:layout_alignStart="@+id/textView11"
+                    android:layout_below="@+id/textView13"
+                    android:layout_marginTop="10dp"
+                    android:elevation="1dp"
+                    android:text="Pliki powinny znajdować się w pamięci wewnętrznej aplikacji, bądź zostać wskazane za pomocą  przeglądarki plików w początkowym oknie. "
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView24"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Główne działanie aplikacji:"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Następnie, posługując się miniskanerem, należy skanować kody odpowiednich obiektów/pomieszczeń/ewidencji w przewidzianych dla nich oknach aplikacji. Po ich uzupełnieniu należy wykonać zdjęcie obiektu oraz zapisać rekord do bazy."
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text='Aby podmienić wprowadzony np. w wyniku błędu rekord należy wprowadzić poprawne dane dla danego numeru etykiety oraz wybrać opcję "nadpisz", która ujawni się po wybraniu opcji "zapisz".'
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView25"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Podgląd bazy danych oraz jego opcje:"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text='W wypadku, kiedy wprowadzony wiersz chcemy usunąć, należy przejść do podglądu bazy, do którego dostaniemy się poprzez wybranie opcji "podgląd bazy" w rozwijany menu ukazującym się po wybraniu przycisku plus.'
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text='Znajdujący się w panelu podglądu bazy należy odszukać błędnie wprowadzony rekord, a następnie dłużej go przytrzymać, aż pojawi się menu kontekstowe z opcją "usuń".'
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Znajdując się panelu podgladu bazy możemy również dokonać podglądu wykonanych zdjęć poprzez krótkie wciśnięcie rekordu, który zawiera ścieżkę do obrazu. Aby zamknąć grafikę należy ponownie krótko nacisnąć obraz."
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Z widoku tego panelu można również wyczyścić całkowicie bazę lub wyeksportować ją do pliku CSV o nazwie WyeksportowanaBaza, pojawiającego się w folderze docelowym aplikacji w pamięci wewnętrznej telefonu. "
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView22"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="W tym celu należy wybrać menu oznaczone znakiem plus i wcisnąć jedną z dwóch możliwych opcji. "
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView26"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="UWAGA - plik może nie być widoczny przy bezpośrednim podłączeniu telefonu do komputera. W celu ujawnienia się pliku, zaleca się ponowne uruchomienie urządzenia."
+                    android:textSize="20sp"
+                    android:textStyle="italic" />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</RelativeLayout>

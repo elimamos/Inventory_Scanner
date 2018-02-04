@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:weightSum="5">
+
+    <ImageView
+        android:id="@+id/stop"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_weight="2"
+        android:adjustViewBounds="true"
+        android:cropToPadding="false"
+        android:scaleType="fitXY"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:src="@drawable/stop_png" />
+
+    <TextView
+        android:id="@+id/infoAllert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_weight="0.5"
+        android:clickable="false"
+        android:elegantTextHeight="true"
+        android:freezesText="false"
+        android:gravity="center_vertical|center_horizontal"
+        android:shadowColor="@android:color/darker_gray"
+        android:text="Brakujące pliki! "
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@android:color/background_light" />
+
+    <TextView
+        android:id="@+id/roomfilesearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:clickable="false"
+        android:elegantTextHeight="true"
+        android:freezesText="false"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Wyszukaj plik z kodami pomieszczeń"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/roomFileName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="@android:color/background_light"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/search1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:text="Przeglądaj"
+            android:textColor="@android:color/background_light" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/evidencefilesearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:clickable="false"
+        android:elegantTextHeight="true"
+        android:freezesText="false"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Wyszukaj plik z kodami ewidencji"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/evidenceFileName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="@android:color/background_light"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/search2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:text="Przeglądaj"
+            android:textColor="@android:color/background_light"  />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/elementfilesearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:clickable="false"
+        android:elegantTextHeight="true"
+        android:freezesText="false"
+        android:gravity="center_vertical|center_horizontal"
+        android:includeFontPadding="false"
+        android:text="Wyszukaj plik z kodami elementów"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/elementFileName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="@android:color/background_light"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/search3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:text="Przeglądaj"
+            android:textColor="@android:color/background_light"  />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <Button
+            android:id="@+id/ZAPISZ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:background="@android:color/background_light"
+            android:onClick="backToMain"
+            android:text="ZAPISZ"
+            android:textColor="@color/colorPrimaryDark" />
+    </LinearLayout>
+
+</LinearLayout>

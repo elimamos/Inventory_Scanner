@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">StockScanner</string>
+    <string name="room">Zeskanuj kod lokalizacji:</string>
+    <string name="evidence">Zeskanuj kod ewidencji:</string>
+    <string name="element">Zeskanuj  kod nazwy:</string>
+    <string name="title_activity_camera_view">CameraView</string>
+    <string name="allertInfo">Aby otworzyć menu pociągnij ekran w dół.</string>
+    <string name="barTitle">Liczba wprowadzonych składników: </string>
+    <string name="alertPt1">Podany numer elemementu: </string>
+    <string name="alertPt2"> już istnieje w bazie!</string>
+    <string name="qestion">Co chcesz zrobić? </string>
+    <string name="missingFiles">Proszę wybrać pliki!</string>
+    <string name="missingFilesTitle">Brakujące pliki!</string>
+    <string name="missingFilesInFolder1">Brakujące pliki o nazwie:</string>
+    <string name="missingFilesInFolder2"> w folderze docelowym aplikacji! </string>
+    <string name="storage">w pamięci wewnętrznej!</string>
+    <string name="deleteCheck">Czy na pewno chcesz wyczyścić bazę?</string>
+</resources>

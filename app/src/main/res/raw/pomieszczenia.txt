@@ -1,0 +1,10 @@
+P$1 Centrala-Gdańsk
+P$6 1 pietro
+P$7 Pokój 101
+P$8 Pokoj 102
+P$9 Pokój 103
+p$30 Pokój 104
+p$28 Magazyn
+P$2 Parter
+P$3 Sala konferencyjna
+p$29 Poddasze
