@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
@@ -231,13 +232,23 @@ public class Browse extends AppCompatActivity implements View.OnClickListener {
         }
         //  else if(uriElement.){}
         else {
+            String TAG= "SHIT";
             setResult(Activity.RESULT_OK,
                     new Intent().putExtra("uriRoom", uriRoom).putExtra("uriEvidence", uriEvidence).putExtra("uriElement", uriElement));
-            SharedPreferences sharedPreferences= getSharedPreferences("filePath",Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor=sharedPreferences.edit();
-            editor.putString("uriRoom",uriRoom.toString());
-            editor.putString("uriEvidence",uriEvidence.toString());
-            editor.putString("uriElement",uriElement.toString());
+            Log.d("uriRoom", RealPathUtil.getRealPathFromURI_API19(this,uriRoom));
+Log.d(TAG,uriRoom.getAuthority());
+            Log.d(TAG,uriRoom.getEncodedPath());
+            File roomFile = new File( uriRoom.getEncodedPath()+ "/listaPomieszczen.csv");
+            Log.d(TAG, roomFile.getAbsolutePath());
+
+            SharedPreferences sharedPreferences = getSharedPreferences("filePath", Context.MODE_PRIVATE);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            editor.putBoolean("selected",true);
+            editor.putString("uriRoom", uriRoom.toString());
+            editor.putString("uriEvidence", uriEvidence.toString());
+            editor.putString("uriElement", uriElement.toString());
             editor.apply();
             finish();
         }

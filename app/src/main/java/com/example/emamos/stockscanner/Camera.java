@@ -2,32 +2,20 @@ package com.example.emamos.stockscanner;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.graphics.drawable.Drawable;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
-import com.example.emamos.stockscanner.R;
-
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by e.mamos on 2017-08-08.
@@ -47,23 +35,25 @@ public class Camera extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camera);
-        if (checkSelfPermission(Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            requestPermissions(new String[]{Manifest.permission.CAMERA},
-                    MY_REQUEST_CODE);
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                 new String[]{ Manifest.permission.CAMERA},MY_REQUEST_CODE);
+           //requestPermissions(new String[]{Manifest.permission.CAMERA},
+             //       MY_REQUEST_CODE);
         }
-        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+
+       if (ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
 
-            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    MY_REQUEST_CODE2);
+           ActivityCompat.requestPermissions(this,
+                   new String[]{ Manifest.permission.READ_EXTERNAL_STORAGE},MY_REQUEST_CODE2);
         }
-        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
 
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    MY_REQUEST_CODE3);
+            ActivityCompat.requestPermissions(this,
+                    new String[]{ Manifest.permission.WRITE_EXTERNAL_STORAGE},MY_REQUEST_CODE3);
         }
         capture();
 

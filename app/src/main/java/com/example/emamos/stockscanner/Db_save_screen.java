@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -16,9 +15,7 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -34,12 +31,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Map;
 
-import static com.example.emamos.stockscanner.R.id.deleteRow;
-import static com.example.emamos.stockscanner.R.id.listView;
 import static com.example.emamos.stockscanner.R.id.roomName;
 
 /**
@@ -117,17 +109,7 @@ public class Db_save_screen extends Activity {
                 }
 
                 if (roomName == null | evidenceName == null | elementName == null | elementCode == null) {
-                   // Log.d("ANYONE", "Can't insert!");
-                /*    if (roomName == null) {
-                     //   Log.d("ANYONE", "roomName is null");
-                    } else if (evidenceName == null) {
-                       // Log.d("ANYONE", "evidenceName is null");
-                    } else if (elementName == null) {
-                        //Log.d("ANYONE", "elementName is null");
-                    } else {
-                        //Log.d("ANYONE", "elemenCode is null");
-                    }
-                    Log.d("ANYONE", "Can't insert!");*/
+
                     final AlertDialog.Builder builder;
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -176,7 +158,6 @@ public class Db_save_screen extends Activity {
         Toolbar mActionBarToolbar = (Toolbar) findViewById(R.id.toolbarDB);
 
         Long count=  dbHelper.countMyElements();
-        Log.d("COUNT",count.toString());
         mActionBarToolbar.setTitle("Liczba wierszy: "+count.toString());
     }
 
@@ -341,26 +322,12 @@ public class Db_save_screen extends Activity {
                                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                       // doneDelete=1;
                                         dialog.dismiss();
                                     }
                                 })
                                 .setIcon(android.R.drawable.ic_dialog_alert)
                                 .show();
 
-                      /*  while(answer==-1){
-                            try {
-                                wait(20);
-                                Log.d("Wait", "Waited");
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }*/
-
-
-
-
-                         //    displayListView();}
                         return true;
                     case R.id.export:
                         dbHelper.exportDBtoCSV();
@@ -400,7 +367,6 @@ public class Db_save_screen extends Activity {
         Toolbar mActionBarToolbar = (Toolbar) findViewById(R.id.toolbarDB);
 
         Long count=  dbHelper.countMyElements();
-        //Log.d("COUNT",count.toString());
 
         mActionBarToolbar.setTitle("Liczba wierszy: "+count.toString());
         displayListView();
