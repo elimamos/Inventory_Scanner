@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     private File roomFile;
     private File evidenceFile;
     private Boolean save;
+    private boolean selected;
+    private String TAG= "Exception_Main";
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton actionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         registerForContextMenu(actionButton);
         save = false;
+
         getFilesFromFolder();
         buttonArray = new Button[5];
         buttonArray[0] = (Button) findViewById(R.id.ex1);
@@ -129,8 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-        // tv2.setText( Environment.getExternalStoragePublicDirectory(                Environment.DIRECTORY_PICTURES).toString());
-        // tv2.setText(getFilesDir().getAbsolutePath()+"/scanner/filename.jpg");
+
         tx2.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -227,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Scanner s = new Scanner(is,"ISO-8859-2").useDelimiter("\\A");
+        Scanner s = new Scanner(is, "ISO-8859-2").useDelimiter("\\A");
         while (s.hasNextLine()) {
             String line = s.nextLine();
             line = line.replaceAll(";", " ");
@@ -263,6 +265,7 @@ public class MainActivity extends AppCompatActivity {
             String line;
 
             while ((line = br.readLine()) != null) {
+
                 line = line.replaceAll(";", " ");
                 line = line.trim();
                 String array[] = line.split(" ");
@@ -285,51 +288,9 @@ public class MainActivity extends AppCompatActivity {
             }
             br.close();
         } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
         }
 
-     /*   InputStream is = null;
-        ContentResolver cr = getContentResolver();
-        try {
-            is = cr.openInputStream(uriEvidence);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        Scanner s = new Scanner(is).useDelimiter("\\A");
-       // String result = s.hasNext() ? s.next() : "";
-        // Log.d("HERE I AM", result);
-       // s.close();
-    *//*   int resource = getResources().getIdentifier(filename, "raw", getPackageName());
-        InputStream input = getResources().openRawResource(resource);
-        Scanner scan = new Scanner(input, "ISO-8859-2");
-
-*//*
-        while (s.hasNextLine()) {
-            String line = s.nextLine();
-            line = line.replaceAll(";", " ");
-            line = line.trim();
-            String array[] = line.split(" ");
-
-            StringBuilder description = new StringBuilder();
-            String descr = "";
-            if (array.length > 2) {
-
-                for (int i = 1; i < array.length; i++) {
-                    description.append(array[i]);
-                    description.append(" ");
-
-                }
-
-            } else {
-                description.append(array[1]);
-            }
-            descr = description.toString().trim();
-            Log.d("CurrentLine",descr);
-
-            myMap.put(array[0], descr);
-
-        }
-        s.close();*/
     }
 
     //Finding matching name to code
@@ -410,14 +371,12 @@ public class MainActivity extends AppCompatActivity {
             String[] PERMISSIONS = {Manifest.permission.CAMERA};
 
             if (hasPermissions(this, PERMISSIONS)) {
-                Log.d("CAMERA ALLOWED", "Permission granted!");
                 Intent i = new Intent(MainActivity.this, Camera.class);
                 i.putExtra("przedmiotKod", elementCode);
 
                 startActivityForResult(i, 0);
             } else {
                 Toast.makeText(this, "Proszê zezwoliæ na dostêp do aparatu!", Toast.LENGTH_SHORT);
-                Log.d("CAMERA ALLOWED", "Permission not granted!");
             }
 
         }
@@ -441,16 +400,15 @@ public class MainActivity extends AppCompatActivity {
             uriEvidence = (Uri) data.getExtras().get("uriEvidence");
             uriElement = (Uri) data.getExtras().get("uriElement");
 
-            String testUri = uriRoom.toString();
-            Uri testUriRoom = Uri.parse(testUri);
+            //  File roomFile = new File( someUriString);
 
             roomDictionary = new HashMap<String, String>();
-            readfileFromUri(testUriRoom, roomDictionary);
+            readfileFromUri(uriRoom, roomDictionary);
             evidenceDictionary = new HashMap<String, String>();
-             readfileFromUri(uriEvidence, evidenceDictionary);
+            readfileFromUri(uriEvidence, evidenceDictionary);
 
             elementDictionary = new HashMap<String, String>();
-              readfileFromUri(uriElement, elementDictionary);
+            readfileFromUri(uriElement, elementDictionary);
 
 
         }
@@ -459,7 +417,6 @@ public class MainActivity extends AppCompatActivity {
     public Long checkifNumberAlreadyExists(String[] number) {
         InventoryDbAdapter.DatabaseHelper mDbHelper = new InventoryDbAdapter.DatabaseHelper(this);
         SQLiteDatabase mDb = mDbHelper.getWritableDatabase();
-        ;
         long l = DatabaseUtils.queryNumEntries(mDb, "Zeskanowane", "Kod_kreskowy=?", number);
         return l;
     }
@@ -468,12 +425,6 @@ public class MainActivity extends AppCompatActivity {
         EditText tx5 = (EditText) findViewById(R.id.comment);
         commentName = tx5.getText().toString();
 
-        // InventoryDbAdapter iA= new InventoryDbAdapter(this);
-        //Long countReturn=iA.checkifNumberAlreadyExists(elementCode);
-        //Log.d("Count",countReturn.toString());
-        // Log.d("CODE",elementCode);
-
-//
         //sprawdzanie, czy pola s± puste
         //
         if (roomName == null | evidenceName == null | elementName == null | elementCode == null) {
@@ -519,7 +470,6 @@ public class MainActivity extends AppCompatActivity {
 
             number[0] = elementCode;
             Long l = checkifNumberAlreadyExists(number);
-            //  Log.w("COUNTRESULT",l.toString());
             if (l != 0) {
                 final AlertDialog.Builder builder;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -580,10 +530,6 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     void getFilesFromFolder() {
-        int MY_REQUEST_CODE2 = 2;
-        int MY_REQUEST_CODE3 = 3;
-
-
         int PERMISSION_ALL = 1;
         String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
 
@@ -591,222 +537,127 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         }
         File path = Environment.getExternalStorageDirectory();
-        //  final String TAG = "MainActivity";
         File folder = new File(path + "/StockScanner");
         if (!folder.exists()) {
+
             SharedPreferences sharedPreferences = getSharedPreferences("filePath", Context.MODE_PRIVATE);
 
-            boolean selected = sharedPreferences.getBoolean("selected", false);
-            //  Log.d("sharedP",String.valueOf(selected));
-            Log.d("sharedP", String.valueOf(selected));
-     //
-            //
-            openBrowser();
-           /* if (selected == false) {
+            selected = sharedPreferences.getBoolean("selected", false);
+
                 openBrowser();
 
+
+        } else {
+
+            elementFile = new File(folder + "/listaElementow.csv");
+            roomFile = new File(folder + "/listaPomieszczen.csv");
+            evidenceFile = new File(folder + "/listaEwidencji.csv");
+            File[] myfiles = folder.listFiles();
+            final AlertDialog.Builder builder;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
             } else {
+                builder = new AlertDialog.Builder(this);
+            }
 
-                //  Log.d("sharedP", sharedPreferences.getString("uriRoom",""));
-                String uriRoomString=sharedPreferences.getString("uriRoom", "");
-
-              uriRoom = Uri.parse(uriRoomString);
-                //    Log.d("sharedP", uriRoom.toString());
-                //     uriEvidence =Uri.parse(sharedPreferences.getString("uriEvidence",""));
-                //   uriElement = Uri.parse(sharedPreferences.getString("uriElement",""));
-
-                //evidenceDictionary = new HashMap<String, String>();
-                // readfileFromUri(uriEvidence, evidenceDictionary);
-                roomDictionary = new HashMap<String, String>();
-                readfileFromUri(uriRoom, roomDictionary);
-                //elementDictionary = new HashMap<String, String>();
-                //readfileFromUri(uriElement, elementDictionary);*//*
-            }*/
-//
-            } else{
-
-                elementFile = new File(folder + "/listaElementow.csv");
-                roomFile = new File(folder + "/listaPomieszczen.csv");
-                evidenceFile = new File(folder + "/listaEwidencji.csv");
-                File[] myfiles = folder.listFiles();
-                final AlertDialog.Builder builder;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
-                } else {
-                    builder = new AlertDialog.Builder(this);
-                }
-
-                if (myfiles == null) {
-                    builder.setTitle(getResources().getString(R.string.missingFilesTitle))
-                            .setMessage("Pusty folder " + getResources().getString(R.string.app_name) + " " + getResources().getString(R.string.storage))
-                            .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    openBrowser();
-                                }
-                            })
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .show();
-
-                } else if (myfiles.length == 0) {
-
-                    //     Log.d(TAG, folder.getPath());
-                    builder.setTitle(getResources().getString(R.string.missingFilesTitle))
-                            .setMessage("Pusty folder " + getResources().getString(R.string.app_name) + " " + getResources().getString(R.string.storage))
-                            .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    openBrowser();
-                                }
-                            })
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .show();
-
-
-                } else {
-                    Hashtable<String, Boolean> fileMap = new Hashtable<String, Boolean>();
-                    boolean roomOK = false;
-                    boolean evidenceOK = false;
-                    boolean elementOK = false;
-
-
-                    if (Arrays.asList(myfiles).contains(roomFile)) {
-                        roomOK = true;
-                    }
-                    if (Arrays.asList(myfiles).contains(evidenceFile)) {
-                        evidenceOK = true;
-
-
-                    }
-                    if (Arrays.asList(myfiles).contains(elementFile)) {
-                        elementOK = true;
-
-                    }
-                    fileMap.put(roomFile.getName(), roomOK);
-                    fileMap.put(evidenceFile.getName(), evidenceOK);
-                    fileMap.put(elementFile.getName(), elementOK);
-
-              /*  boolean[] fileStatus = new boolean[3];
-                fileStatus[0]=roomOK;
-                fileStatus[1]=evidenceOK;
-                fileStatus[2]=elementOK;*/
-                    //  List<boolean>[] missingFiles = new boolean[3];
-                    //ArrayList<String> missingFile = new ArrayList<>();
-                    String missingFiles = "";
-                    if (roomOK && evidenceOK && elementOK) {
-                        //Log.d(TAG,"ALL FILES THERE!");
-                        evidenceDictionary = new HashMap<String, String>();
-                        readfileFromFile(evidenceFile, evidenceDictionary);
-                        roomDictionary = new HashMap<String, String>();
-                        readfileFromFile(roomFile, roomDictionary);
-                        elementDictionary = new HashMap<String, String>();
-                        readfileFromFile(elementFile, elementDictionary);
-
-                    } else {
-                        for (Map.Entry<String, Boolean> entry : fileMap.entrySet()) {
-                            if (!entry.getValue()) {
-                                //missingFile.add(entry.getKey());
-                                missingFiles += entry.getKey() + ", ";
-                                //  Log.d(TAG+" Iter", entry.getKey());
+            if (myfiles == null) {
+                builder.setTitle(getResources().getString(R.string.missingFilesTitle))
+                        .setMessage("Pusty folder " + getResources().getString(R.string.app_name) + " " + getResources().getString(R.string.storage))
+                        .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                openBrowser();
                             }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
 
+            } else if (myfiles.length == 0) {
+
+
+                builder.setTitle(getResources().getString(R.string.missingFilesTitle))
+                        .setMessage("Pusty folder " + getResources().getString(R.string.app_name) + " " + getResources().getString(R.string.storage))
+                        .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                openBrowser();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
+
+            } else {
+                Hashtable<String, Boolean> fileMap = new Hashtable<String, Boolean>();
+                boolean roomOK = false;
+                boolean evidenceOK = false;
+                boolean elementOK = false;
+
+
+                if (Arrays.asList(myfiles).contains(roomFile)) {
+                    roomOK = true;
+                }
+                if (Arrays.asList(myfiles).contains(evidenceFile)) {
+                    evidenceOK = true;
+
+
+                }
+                if (Arrays.asList(myfiles).contains(elementFile)) {
+                    elementOK = true;
+
+                }
+                fileMap.put(roomFile.getName(), roomOK);
+                fileMap.put(evidenceFile.getName(), evidenceOK);
+                fileMap.put(elementFile.getName(), elementOK);
+
+                String missingFiles = "";
+                if (roomOK && evidenceOK && elementOK) {
+                    evidenceDictionary = new HashMap<String, String>();
+                    readfileFromFile(evidenceFile, evidenceDictionary);
+                    roomDictionary = new HashMap<String, String>();
+                    readfileFromFile(roomFile, roomDictionary);
+                    elementDictionary = new HashMap<String, String>();
+                    readfileFromFile(elementFile, elementDictionary);
+
+                } else {
+                    for (Map.Entry<String, Boolean> entry : fileMap.entrySet()) {
+                        if (!entry.getValue()) {
+                            missingFiles += entry.getKey() + ", ";
                         }
-                        missingFiles = missingFiles.trim().substring(0, missingFiles.length() - 2);
-                        builder.setTitle(getResources().getString(R.string.missingFilesTitle))
-                                .setMessage(new StringBuilder().append(getResources().getString(R.string.missingFilesInFolder1)).append(" ").append(missingFiles).append(" ").append(getResources().getString(R.string.missingFilesInFolder2)).toString())
-                                .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                        openBrowser();
-                                    }
-                                })
-                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                .show();
-
-                  /*  for(int i=0;i<3;i++){
-                       if(!fileStatus[i]){
-
-                       }
-                    }*/
-
 
                     }
+                    missingFiles = missingFiles.trim().substring(0, missingFiles.length() - 2);
+                    builder.setTitle(getResources().getString(R.string.missingFilesTitle))
+                            .setMessage(new StringBuilder().append(getResources().getString(R.string.missingFilesInFolder1)).append(" ").append(missingFiles).append(" ").append(getResources().getString(R.string.missingFilesInFolder2)).toString())
+                            .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    openBrowser();
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+
                 }
-          /*  if(!elementFile.exists() ){
-
-                builder.setTitle(getResources().getString(R.string.missingFilesTitle))
-                        .setMessage(getResources().getString(R.string.missingFilesInFolder1)+" "+elementFile.getName()+" "+getResources().getString(R.string.missingFilesInFolder2))
-                        .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
             }
-            else if(!roomFile.exists()){
-                final AlertDialog.Builder builder;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
-                } else {
-                    builder = new AlertDialog.Builder(this);
-                }
-                builder.setTitle(getResources().getString(R.string.missingFilesTitle))
-                        .setMessage(getResources().getString(R.string.missingFilesInFolder1)+" "+elementFile.getName()+" "+getResources().getString(R.string.missingFilesInFolder2))
-                        .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-            }
-            else if(!evidenceFile.exists()){
-                final AlertDialog.Builder builder;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
-                } else {
-                    builder = new AlertDialog.Builder(this);
-                }
-                builder.setTitle(getResources().getString(R.string.missingFilesTitle))
-                        .setMessage(getResources().getString(R.string.missingFilesInFolder1)+" "+evidenceFile.getName()+" "+getResources().getString(R.string.missingFilesInFolder2))
-                        .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
 
-            }
-*/
-                // }
-           /* if (!success) {
-                // Log.d(TAG, "Folder not created.");
-               openBrowser();
-            } else {
+            folder.setExecutable(true);
+            folder.setReadable(true);
+            folder.setWritable(true);
+            Intent mediaScannerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            Uri fileContentUri = Uri.fromFile(folder);
+            mediaScannerIntent.setData(fileContentUri);
+            this.sendBroadcast(mediaScannerIntent);
 
-            }*/
-                folder.setExecutable(true);
-                folder.setReadable(true);
-                folder.setWritable(true);
-                Intent mediaScannerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                Uri fileContentUri = Uri.fromFile(folder);
-                mediaScannerIntent.setData(fileContentUri);
-                this.sendBroadcast(mediaScannerIntent);
+            MediaScannerConnection.scanFile(this, new String[]{folder.getAbsolutePath().toString()}, null, null);
 
-                MediaScannerConnection.scanFile(this, new String[]{folder.getAbsolutePath().toString()}, null, null);
-
-
-            }
 
         }
+
+    }
 
 
     private void openBrowser() {
@@ -859,7 +710,6 @@ public class MainActivity extends AppCompatActivity {
 
         popup.show();//showing popup menu
 
-        //  view.showContextMenu();
     }
 
     void openInfo() {

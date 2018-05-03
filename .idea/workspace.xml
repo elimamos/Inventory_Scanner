@@ -2369,7 +2369,7 @@
     <property name="ExportApk.SignV1" value="true" />
     <property name="AnalyzeApkAction.lastApkPath" value="$PROJECT_DIR$/app/build/outputs/apk/app-release-unsigned.apk" />
     <property name="android.profiler.active" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1525346044402" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1525347372599" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
